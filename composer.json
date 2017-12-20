@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Langdi\Scrapyd\\": "src/"
+      "Langdi\\Scrapyd\\": "src/"
     }
   }
 }
