@@ -34,7 +34,7 @@ class ScrapydAPI {
 
     public function __construct($url, $client = null) {
         // Add trailing slash to URL
-        if (mb_substr($url, mb_strlen($url)-1, 1) !== '/') {
+        if (mb_substr($url, mb_strlen($url) - 1, 1) !== '/') {
             $url .= '/';
         }
         $this->url = $url;
@@ -132,9 +132,11 @@ class ScrapydAPI {
         return \GuzzleHttp\json_decode($response->getBody());
     }
 
-    public function listJobs() {
+    public function listJobs($project) {
         $url = $this->buildUrl(self::LIST_JOBS_ENDPOINT);
-        $response = $this->client->get($url);
+        $data = compact('project');
+        $queryString = http_build_query($data);
+        $response = $this->client->get($url . '?' . $queryString);
 
         return \GuzzleHttp\json_decode($response->getBody());
     }
