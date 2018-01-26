@@ -55,6 +55,10 @@ class ScrapydAPI {
 
     }
 
+    private function buildLogUrl($project, $spider, $jobid) {
+        return $this->url."logs/{$project}/{$spider}/{$jobid}.log";
+    }
+
     public function daemonStatus() {
         $url = $this->buildUrl(self::DAEMON_STATUS_ENDPOINT);
         $response = $this->client->get($url);
@@ -169,5 +173,12 @@ class ScrapydAPI {
         $response = $this->client->post($url, ['form_params' => $data]);
 
         return \GuzzleHttp\json_decode($response->getBody());
+    }
+
+    public function showLog($project, $spider, $jobid) {
+        $url = $this->buildLogUrl($project, $spider, $jobid);
+        $response = $this->client->get($url);
+
+        return $response->getBody()->getContents();
     }
 }
