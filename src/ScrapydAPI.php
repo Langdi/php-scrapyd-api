@@ -55,8 +55,8 @@ class ScrapydAPI {
 
     }
 
-    private function buildLogUrl($project, $spider, $jobid) {
-        return $this->url."logs/{$project}/{$spider}/{$jobid}.log";
+    private function buildLogUrl($project, $spider, $jobid, $suffix = ".log") {
+        return $this->url."logs/{$project}/{$spider}/{$jobid}{$suffix}";
     }
 
     public function daemonStatus() {
@@ -175,10 +175,10 @@ class ScrapydAPI {
         return \GuzzleHttp\json_decode($response->getBody());
     }
 
-    public function showLog($project, $spider, $jobid) {
-        $url = $this->buildLogUrl($project, $spider, $jobid);
+    public function showLog($project, $spider, $jobid, $extension = '.log') {
+        $url = $this->buildLogUrl($project, $spider, $jobid, $extension);
         $response = $this->client->get($url);
 
-        return $response->getBody()->getContents();
+        return $response;
     }
 }
